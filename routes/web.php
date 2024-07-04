@@ -6,6 +6,7 @@ use App\Http\Controllers\IncomingMailController;
 use App\Http\Controllers\MailEditController;
 use App\Http\Controllers\OutgoingMailController;
 use App\Http\Controllers\UserController;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,7 +42,9 @@ Route::middleware([
     Route::get('/mail/{mail}/edit', MailEditController::class)->name('mail.request.edit');
 
     Route::get('/mail/incoming', IncomingMailController::class)->name('mail.incoming');
-    Route::get('/mail/incoming/{mail}', [IncomingMailController::class, 'generate_surat'])->name('mail.incoming.generate');
+    Route::get('/mail/incoming/{mail}', function () {
+        return Pdf::loadView('mail.incoming.mail')->stream();
+    })->name('mail.incoming.generate');
 
     Route::get('/mail/outgoing', OutgoingMailController::class)->name('mail.outgoing');
 

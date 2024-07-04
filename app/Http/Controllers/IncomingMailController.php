@@ -18,6 +18,7 @@ class IncomingMailController extends Component
     public function generate_surat(Mail $mail)
     {
 
+        return view('mail.incoming.mail');
         $pdf = Pdf::loadView('mail.incoming.mail')->stream();
 
         return $pdf;
